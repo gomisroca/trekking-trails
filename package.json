@@ -13,6 +13,7 @@
     "@nuxt/ui": "^2.15.2",
     "@prisma/client": "^5.12.1",
     "@types/formidable": "^3.4.5",
+    "@types/uuid": "^9.0.8",
     "date-fns": "^3.6.0",
     "formidable": "^3.5.1",
     "h3-formidable": "^1.0.0",
