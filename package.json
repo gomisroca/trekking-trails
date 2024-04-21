@@ -1,0 +1,24 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "@nuxt/ui": "^2.15.2",
+    "@prisma/client": "^5.12.1",
+    "@types/formidable": "^3.4.5",
+    "date-fns": "^3.6.0",
+    "formidable": "^3.5.1",
+    "h3-formidable": "^1.0.0",
+    "nuxt": "^3.11.2",
+    "uuid": "^9.0.1",
+    "vue": "^3.4.21",
+    "vue-router": "^4.3.0"
+  }
+}
