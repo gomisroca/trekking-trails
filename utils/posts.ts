@@ -39,7 +39,7 @@
 // }
 
 // put /
-export async function uploadPost(formData){
+export async function uploadPost(formData: FormData){
     const { message } = await $fetch('/api/posts/upload', {
         method: 'POST',
         body: formData,

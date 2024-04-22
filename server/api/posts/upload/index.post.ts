@@ -70,6 +70,8 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
             statusMessage: "An unknown error occurred",
             statusCode: 500
         });
+    } finally {
+        await prisma.$disconnect();
     }
 });
 
