@@ -10,7 +10,7 @@ const openRegister = ref<boolean>(false)
 const openLogin = ref<boolean>(false)
 </script>
 <template>
-    <UPopover class="absolute top-20 right-[10rem]" mode="hover">
+    <UPopover class="absolute top-4 right-4 lg:top-10 lg:right-10" mode="hover">
         <UButton color="white" variant="outline" size="lg" icon="i-heroicons-queue-list-solid" />
         <template #panel>
             <UCard>
