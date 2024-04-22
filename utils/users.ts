@@ -5,9 +5,6 @@ export async function registerUser(form: any){
         method: 'POST',
         body: form,
     });
-    if(res.status == 200){
-        await getUser();
-    }
     return res
 }
 
@@ -16,9 +13,6 @@ export async function loginUser(form: any){
         method: 'POST',
         body: form,
     });
-    if(res.status == 200){
-        await getUser();
-    }
     return res
 }
 
