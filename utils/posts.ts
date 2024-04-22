@@ -1,22 +1,21 @@
-// async function getPosts() {
-//   const res = await useFetch('/api/posts').then(response => {
-//     return response
-//   })
+import type { Post } from "@prisma/client";
 
-//   return res
-// }
-//   // Children function of getPosts
+export async function getPosts(): Promise<any> {
+  const res = await $fetch('/api/posts');
+  console.log(res)
+  return res.posts
+}
+
+// export async function getSortedPostsData() {
 //     const allPostsData = await getPosts();
-
-//     export function getSortedPostsData() {
-//       return (allPostsData.data).sort((a, b) => {
+//     return (allPostsData).sort((a, b) => {
 //         if (a.date < b.date) {
-//           return 1;
+//             return 1;
 //         } else {
-//           return -1;
+//             return -1;
 //         }
-//       });
-//     }
+//     });
+// }
 
 //     export function getPostsByTag(tag) {
 //       let data = allPostsData.data.filter(x => x.category.includes(tag));

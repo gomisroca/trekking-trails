@@ -4,15 +4,13 @@
             <form class="p-2 flex flex-col space-y-6" @submit.prevent="onSubmit">
                 <UFormGroup label="Title" name="title" class="uppercase font-semibold">
                     <UInput
-                    
                     v-model="state.title"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Category" name="category" class="uppercase font-semibold">
+                <UFormGroup label="Categories" name="categories" class="uppercase font-semibold">
                     <UInput
-                    padded
-                    v-model="state.category"
+                    v-model="state.categories"
                     />
                 </UFormGroup>
 
@@ -20,12 +18,6 @@
                     <UTextarea  
                     autoresize
                     v-model="state.content"
-                    />
-                </UFormGroup>
-                
-                <UFormGroup label="Author Name" name="author_name" class="uppercase font-semibold">
-                    <UInput
-                    v-model="state.author_name"
                     />
                 </UFormGroup>
 
@@ -49,40 +41,50 @@
                 </UFormGroup>
                 <UButton type="submit" class="uppercase font-bold dark:text-secondary">Upload Post</UButton>
             </form>
+            <div class="m-auto">
+                <span v-if="success" class="text-primary font-medium">{{ success }}</span>
+                <span v-if="error" class="text-red-500 font-medium">{{ error }}</span>
+            </div>
         </UCard>
     </UContainer>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { useUser } from '~/composables/states'
 import { uploadPost } from '@/utils/posts';
-const covers = ref();
-const gallery = ref();
-const success = ref();
-const error = ref();
+const covers = ref<HTMLInputElement>();
+const gallery = ref<HTMLInputElement>();
+const success = ref<string | null>();
+const error = ref<string | null>();
+const user: Ref<JWTUser> = useUser()
 
 const state = reactive({
-    title: undefined,
-    category: undefined,
-    content: undefined,
-    author_name: undefined,
-    date: undefined,
+    title: '',
+    categories: '',
+    content: '',
+    date: '',
 })
 
 async function onSubmit() {
     try {
-        error.value = null;
-        success.value = null;
-        const formData = new FormData();
-        formData.append('title', state.title)
-        formData.append('content', state.content)
-        formData.append('author_name', state.author_name)
-        formData.append('date', state.date)
-        console.log(covers.value.files)
-        Array.from(covers.value.files).map((file, index) => formData.append('covers', file));
-        Array.from(gallery.value.files).map((file, index) => formData.append('gallery', file));
-        console.log(formData)
-        success.value = uploadPost(formData);
-    } catch (e) {
+        const userData = user.value;
+        if(userData){
+            error.value = null;
+            success.value = null;
+            const formData = new FormData();
+            formData.append('title', state.title)
+            formData.append('categories', state.categories)
+            formData.append('content', state.content)
+            formData.append('user', userData.email)
+            formData.append('date', state.date)
+            Array.from(covers.value?.files as FileList).map((file, index) => formData.append('covers', file));
+            Array.from(gallery.value?.files as FileList).map((file, index) => formData.append('gallery', file));
+            console.log(formData)
+            success.value = await uploadPost(formData);
+        } else{
+            error.value = 'You must be logged in to do this.'
+        }
+    } catch (e: any) {
         error.value = e.statusMessage;
     }
 }

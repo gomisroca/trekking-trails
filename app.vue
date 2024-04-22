@@ -10,7 +10,7 @@
 <template>
     <main :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="transition ease-in-out duration-1000 grayscale-0 lg:grayscale hover:grayscale-0 min-h-screen flex min-w-screen overflow-x-hidden">  
         <NuxtLayout name="default">
-            <div class="min-w-full min-h-screen">
+            <div class="min-w-full min-h-screen items-center flex">
                 <Navmenu />
                 <NuxtPage/>
             </div>
