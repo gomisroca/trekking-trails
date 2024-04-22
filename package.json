@@ -12,14 +12,21 @@
   "dependencies": {
     "@nuxt/ui": "^2.15.2",
     "@prisma/client": "^5.12.1",
+    "@types/bcryptjs": "^2.4.6",
     "@types/formidable": "^3.4.5",
     "@types/uuid": "^9.0.8",
+    "bcryptjs": "^2.4.3",
     "date-fns": "^3.6.0",
     "formidable": "^3.5.1",
     "h3-formidable": "^1.0.0",
+    "jsonwebtoken": "^9.0.2",
     "nuxt": "^3.11.2",
+    "pinia": "^2.1.7",
     "uuid": "^9.0.1",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.6"
   }
 }
