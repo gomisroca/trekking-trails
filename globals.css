@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities{
+    .text-shadow-lg {
+      text-shadow: 4px 4px 10px black;
+    }
+    .text-shadow-md {
+      text-shadow: 3px 3px 5px black;
+    }
+    .text-shadow-sm {
+      text-shadow: 2px 2px 5px black;
+    } 
+    .text-shadow {
+      text-shadow: 1px 1px 5px black;
+    }
+  }

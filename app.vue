@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import backgroundImagePath from '@/public/background.jpg'
     import { getUser } from '~/utils/users'
     const user: Ref<JWTUser> = useUser()
     const token = useCookie('trails_session')
@@ -7,10 +8,12 @@
     }
 </script>
 <template>
-    <main class="min-h-screen flex min-w-screen overflow-x-hidden">  
+    <main :style="{ backgroundImage: `url(${backgroundImagePath})` }" class="transition ease-in-out duration-1000 grayscale-0 lg:grayscale hover:grayscale-0 min-h-screen flex min-w-screen overflow-x-hidden">  
         <NuxtLayout name="default">
-            <Navmenu />
-            <NuxtPage/>
+            <div class="min-w-full min-h-screen">
+                <Navmenu />
+                <NuxtPage/>
+            </div>
         </NuxtLayout>
     </main>
 </template>
