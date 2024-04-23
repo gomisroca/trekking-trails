@@ -4,3 +4,6 @@ interface JWTUser {
     name: string;
     role: Role
 }
+interface Response {
+    status: number;
+}
