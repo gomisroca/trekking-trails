@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   tailwindcss: {
     cssPath: 'globals.css',
   },
-  modules: ["@nuxt/ui",'@nuxtjs/tailwindcss','@nuxtjs/color-mode', '@nuxtjs/google-fonts'],
+  modules: ["@nuxt/ui",'@nuxtjs/tailwindcss','@nuxtjs/color-mode', '@nuxtjs/google-fonts', '@nuxtjs/device'],
   googleFonts: {
     families: {
       Roboto: true,
