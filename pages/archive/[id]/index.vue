@@ -2,6 +2,7 @@
 import type { Post, User } from '@prisma/client';
 import { getSinglePost } from '@/utils/posts';
 import Date from '@/components/Date.vue';
+import CarouselWrapper from '@/components/SinglePost/CarouselWrapper.vue'
 import {
     onMounted,
     ref
@@ -25,45 +26,67 @@ async function fetchPost() {
     }
 }
 
+const isOpen = ref<boolean>(false)
+const selectedImage = ref<number>();
+
+const selectImage = ((img: string) => {
+    const idx = post.value?.gallery.findIndex(x => x == img);
+    isOpen.value = true;
+    selectedImage.value = idx;
+})
+
 onMounted(() => {
     fetchPost();
-});
+})
 </script>
 
 <template>
     <!-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 -->
-    <UContainer class="grid grid-flow-col auto-cols-max gap-4">
-        <UCard v-if="post" class="relative hover:contrast-[1.1] transition duration-200">
-            <NuxtLink :to="`/archive/${post.id}`">
-                <div 
-                v-if="post.covers && post.covers[0]" 
-                className='rounded-t-md overflow-hidden grid content-center'>
-                    <img className='rounded-t-md h-[150px] md:h-[200px] align-center w-full' :src="'/' + post.covers[0]" />
-                </div>
-                <div className='mx-4 md:mx-6 absolute left-0 right-0 top-[100px] bottom-[100px] md:top-[130px] md:bottom-[130px] lg:top-[160px] lg:bottom-[160px] z-10 bg-neutral-100/85 dark:bg-neutral-900/85 p-2 items-center flex flex-col justify-center'>
-                    <div class="text-sm text-shadow-sm flex flex-col justify-center text-center">
-                        <Date :date="post.date" />
-                        <div class="flex">
-                            <div 
-                            class="mx-[2px] px-[8px]" 
-                            v-for="cat in post.categories.slice(0, 4)">
-                            {{ cat }}
-                            </div>
-                        </div>
-                    </div>
-                    <div className='font-semibold text-2xl text-shadow-md'>{{post.title}}</div>
-                    <div>
-                        <div class="text-sm text-shadow-sm">
-                            by {{post.author.name}}
+    <UContainer class="w-screen pt-16 pb-4">
+        <UCard v-if="post" class="m-auto relative">
+            <div 
+            v-if="post.covers && post.covers[0]" 
+            className='rounded-md lg:h-[400px] overflow-hidden grid content-center'>
+                <img className='rounded-md align-center w-full' :src="'/' + post.covers[0]" />
+            </div>
+            <div className='flex flex-col items-center justify-center p-2 lg:p-4'>
+                <div class="text-sm text-shadow dark:text-shadow-sm flex flex-col justify-center text-center">
+                    <Date :date="post.date" />
+                    <div class="flex">
+                        <div 
+                        class="mx-[2px] px-[8px]" 
+                        v-for="cat in post.categories.slice(0, 4)">
+                        {{ cat }}
                         </div>
                     </div>
                 </div>
-                <div 
-                v-if="post.covers && post.covers[1]" 
-                className='rounded-b-md overflow-hidden grid content-center'>
-                    <img className='rounded-b-md h-[150px] md:h-[200px] align-center w-full' :src="'/' + post.covers[1]" />
+                <div className='font-semibold text-2xl text-shadow-sm dark:text-shadow-md'>{{post.title}}</div>
+                <div>
+                    <div class="text-sm text-shadow dark:text-shadow-sm">
+                        by {{post.author.name}}
+                    </div>
                 </div>
-            </NuxtLink>
-        </UCard>
+            </div>
+            <UDivider />
+            <div class="py-4 lg:px-6">
+                {{ post.content }}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:py-4 gap-2">
+                <div 
+                v-for="image in post.gallery" 
+                className='transition duration-200 hover:contrast-[1.1] rounded-md overflow-hidden grid content-center cursor-default md:cursor-pointer'>
+                    <img 
+                    class="w-full rounded-md"
+                    :key="image"
+                    :src="'/' + image" 
+                    @click="selectImage(image)" />
+                </div>
+            </div>
+        </UCard> 
     </UContainer>
+    <UModal v-model="isOpen" class="hidden md:flex items-center justify-center" :overlay="false" :ui="{ width: 'mx-2 w-screen lg:mx-4 xl:mx-none xl:w-3/4 sm:max-w-none' }">
+        <UCard class="m-auto flex justify-center items-center">
+            <CarouselWrapper :selectedImage="selectedImage" :gallery="post!.gallery" />
+        </UCard>
+    </UModal>
 </template>
