@@ -50,55 +50,28 @@ export async function getSinglePost(id: string): Promise<PostWithAuthor | null> 
     return null
 }
 
-// put /
+// Upload Post
 export async function uploadPost(formData: FormData){
-    const { message } = await $fetch('/api/posts/upload', {
+    const { message } = await $fetch<Response>('/api/posts/upload', {
         method: 'POST',
         body: formData,
     });
     return message
 }
 
-// // put /:id
-// export async function editPost(data){
-//   const res = await axios.put('http://localhost:3030/posts/' + data.get('id'), data, {
-//   }).then(res => {
-//       return res
-//   })
-  
-//   return res
-// }
+// Edit Single
+export async function editPost(id: string, formData: FormData){
+    const { message } = await $fetch<Response>('/api/posts/' + id,  {
+        method: 'PUT',
+        body: formData,
+    });
+    return message
+}
 
-// // delete /:id
-// export async function removePost(id){
-//   const res = await axios.delete('http://localhost:3030/posts/' + id, {
-//   }).then(res => {
-//       return res
-//   })
-  
-//   return res
-// }
-
-// // put /:id/image
-// export async function movePostImage(image, type, id){
-//   const res = await axios.put('http://localhost:3030/posts/' + id + "/image", {
-//     image: image,
-//     type: type,
-//   }).then(res => {
-//       return res
-//   })
-  
-//   return res
-// }
-
-// // delete /:id/image
-// export async function removePostImage(image, type, id){
-//   const res = await axios.delete('http://localhost:3030/posts/' + id + "/image", {
-//     image: image,
-//     type: type,
-//   }).then(res => {
-//       return res
-//   })
-  
-//   return res
-// }
+// Delete Single
+export async function removePost(id: string){
+    const { message } = await $fetch<Response>('/api/posts/' + id,  {
+        method: 'DELETE'
+    });
+    return message
+}

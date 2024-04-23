@@ -6,4 +6,5 @@ interface JWTUser {
 }
 interface Response {
     status: number;
+    message: string;
 }
