@@ -14,7 +14,7 @@ if(!user.value && token.value){
     <main :style="{ backgroundImage: `url(${isMobileOrTablet ? bgMobile : bgDark})` }" class="animated-background min-h-screen flex min-w-screen overflow-x-hidden">  
         <NuxtLayout name="default">
             <div 
-            class="min-w-full min-h-screen items-center flex bg-gradient-to-br animated-background from-orange-400/50 via-cyan-400/50 to-green-600/50 dark:from-orange-800/50 dark:via-neutral-700/50 dark:to-emerald-900/50" >
+            class="min-w-full min-h-screen items-center flex bg-gradient-to-br animated-background from-orange-400/50 via-cyan-400/50 to-emerald-600/50 dark:from-orange-800/50 dark:via-neutral-700/50 dark:to-neutral-900/50" >
                 <Navmenu />
                 <NuxtPage/>
             </div>
