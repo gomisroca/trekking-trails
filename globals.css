@@ -21,11 +21,10 @@ body * {
       text-shadow: 1px 1px 2px rgba(0,0,0, 0.6);
     }
     .animated-background {
-      background-size: 110%;
-  
-      -webkit-animation: animation 60s ease infinite;
-      -moz-animation: animation 60s ease infinite;
-      animation: animation 60s ease infinite;
+      background-size: 120%;
+      -webkit-animation: animation 90s linear infinite;
+      -moz-animation: animation 90s linear infinite;
+      animation: animation 90s linear infinite;
     }
     
     @keyframes animation {
