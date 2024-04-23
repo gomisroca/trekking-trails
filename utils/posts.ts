@@ -1,9 +1,22 @@
-import type { Post } from "@prisma/client";
+import type { Post, User } from "@prisma/client";
 
-export async function getPosts(): Promise<any> {
-  const res = await $fetch('/api/posts');
-  console.log(res)
-  return res.posts
+interface PostWithAuthor extends Post{
+    author: User
+}
+interface SingleResponse extends Response{
+    post: PostWithAuthor;
+}
+interface MultipleResponse extends Response{
+    posts: PostWithAuthor[];
+}
+
+// Get Many
+export async function getPosts(): Promise<PostWithAuthor[] | null> {
+    const res = await $fetch<MultipleResponse>('/api/posts');
+    if(res.status == 200){
+        return res.posts
+    }
+    return null
 }
 
 // export async function getSortedPostsData() {
@@ -28,14 +41,14 @@ export async function getPosts(): Promise<any> {
 //       });
 //     }
 
-// // get /:id
-// export async function getPostData(id) {
-//   const res = await axios.get('http://localhost:3030/posts/' + id).then(response => {
-//     return response
-//   })
-  
-//   return res
-// }
+// Get Single
+export async function getSinglePost(id: string): Promise<PostWithAuthor | null> {
+    const res = await $fetch<SingleResponse>('/api/posts/' + id);
+    if(res.status == 200){
+        return res.post
+    }
+    return null
+}
 
 // put /
 export async function uploadPost(formData: FormData){
