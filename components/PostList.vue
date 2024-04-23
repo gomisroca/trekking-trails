@@ -32,9 +32,8 @@ onMounted(() => {
 <template>
     <!-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 -->
     <UContainer class="grid grid-flow-col auto-cols-max gap-4">
-        
         <UCard 
-        class="relative"
+        class="relative hover:contrast-[1.1] transition duration-200"
         v-for="post in posts" 
         :key=post.title>
             <NuxtLink :to="`/archive/${post.id}`">
@@ -43,8 +42,8 @@ onMounted(() => {
                 className='rounded-t-md overflow-hidden grid content-center'>
                     <img className='rounded-t-md h-[150px] md:h-[200px] align-center w-full' :src=post.covers[0] />
                 </div>
-                <div className='mx-4 md:mx-6 absolute left-0 right-0 top-[100px] bottom-[100px] md:top-[130px] md:bottom-[130px] lg:top-[160px] lg:bottom-[160px] z-10 bg-neutral-800/80 p-2 items-center flex flex-col justify-center'>
-                    <div class="flex flex-col justify-center text-center">
+                <div className='mx-4 md:mx-6 absolute left-0 right-0 top-[100px] bottom-[100px] md:top-[130px] md:bottom-[130px] lg:top-[160px] lg:bottom-[160px] z-10 bg-neutral-100/85 dark:bg-neutral-900/85 p-2 items-center flex flex-col justify-center'>
+                    <div class="text-sm text-shadow-sm flex flex-col justify-center text-center">
                         <Date :date="post.date" />
                         <div class="flex">
                             <div 
@@ -54,11 +53,11 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                    <div className='font-semibold text-xl'>{{post.title}}</div>
+                    <div className='font-semibold text-2xl text-shadow-md'>{{post.title}}</div>
                     <div>
-                        <small>
+                        <div class="text-sm text-shadow-sm">
                             by {{post.author.name}}
-                        </small>
+                        </div>
                     </div>
                 </div>
                 <div 

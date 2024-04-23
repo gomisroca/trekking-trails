@@ -11,7 +11,7 @@ const openLogin = ref<boolean>(false)
 </script>
 <template>
     <UPopover class="absolute top-4 right-4 lg:top-10 lg:right-10" mode="hover">
-        <UButton color="white" variant="outline" size="lg" icon="i-heroicons-queue-list-solid" />
+        <UButton color="white" size="lg" icon="i-heroicons-queue-list-solid" class="bg-neutral-100/60 dark:bg-neutral-900/60 hover:bg-neutral-100 hover:dark:bg-neutral-900 transition duration-200" />
         <template #panel>
             <UCard>
                 <div class="grid grid-cols-2 gap-2">
@@ -21,7 +21,7 @@ const openLogin = ref<boolean>(false)
                     <UTooltip text="Inbox">
                         <UButton variant="outline" icon="i-heroicons-envelope-solid"  />
                     </UTooltip>
-                    <UTooltip text="Collection">
+                    <UTooltip text="Archive">
                         <UButton variant="outline" icon="i-heroicons-book-open-solid"  />
                     </UTooltip>
                     <UTooltip text="Search">
