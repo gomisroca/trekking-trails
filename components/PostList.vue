@@ -15,7 +15,7 @@ const posts = ref<PostWithAuthor[]>([]);
 async function fetchPosts() {
     try {
         const response = await getPosts();
-        posts.value = response;
+        posts.value = response as PostWithAuthor[];
         console.log(posts.value)
     } catch (err: any) {
         if (err.response) {
