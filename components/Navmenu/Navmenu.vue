@@ -15,14 +15,14 @@ const openLogin = ref<boolean>(false)
         <template #panel>
             <UCard>
                 <div class="grid grid-cols-2 gap-2">
+                    <UTooltip text="Home">
+                        <UButton variant="outline" icon="i-heroicons-home-20-solid" to="/"  />
+                    </UTooltip>
                     <UTooltip text="Toggle Theme">
                         <ThemeToggle />
                     </UTooltip>
-                    <UTooltip text="Inbox">
-                        <UButton variant="outline" icon="i-heroicons-envelope-solid"  />
-                    </UTooltip>
                     <UTooltip text="Archive">
-                        <UButton variant="outline" icon="i-heroicons-book-open-solid"  />
+                        <UButton variant="outline" icon="i-heroicons-book-open-solid" to="/archive" />
                     </UTooltip>
                     <UTooltip text="Search">
                         <UButton variant="outline" icon="i-heroicons-magnifying-glass"  />
