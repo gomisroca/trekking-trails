@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import { getPosts } from '@/utils/posts'
 import Date from '@/components/Date.vue'
-import type { Post, User } from '@prisma/client';
+import type { Post, User, Comment } from '@prisma/client';
 import {
     onMounted,
     ref
 } from 'vue'
 
 interface PostWithAuthor extends Post{
-    author: User
+    author: User,
+    comments: Comment[]
 }
 const posts = ref<PostWithAuthor[]>([]);
 
 async function fetchPosts() {
     try {
         const response = await getPosts();
-        posts.value = response as PostWithAuthor[];
-        console.log(posts.value)
+        if(response){
+            posts.value = response
+            console.log(posts.value)
+        }
     } catch (err: any) {
         if (err.response) {
             console.log("Server Error:", err);
@@ -43,7 +46,7 @@ onMounted(() => {
                     <img className='rounded-t-md h-[150px] md:h-[200px] align-center w-full' :src=post.covers[0] />
                 </div>
                 <div className='mx-4 md:mx-6 absolute left-0 right-0 top-[100px] bottom-[100px] md:top-[130px] md:bottom-[130px] lg:top-[160px] lg:bottom-[160px] z-10 bg-neutral-100/85 dark:bg-neutral-900/85 p-2 items-center flex flex-col justify-center'>
-                    <div class="text-sm text-shadow-sm flex flex-col justify-center text-center">
+                    <div class="text-sm flex flex-col justify-center text-center">
                         <Date :date="post.date" />
                         <div class="flex">
                             <div 
@@ -53,9 +56,9 @@ onMounted(() => {
                             </div>
                         </div>
                     </div>
-                    <div className='font-semibold text-2xl text-shadow-md'>{{post.title}}</div>
+                    <div className='font-semibold text-2xl'>{{post.title}}</div>
                     <div>
-                        <div class="text-sm text-shadow-sm">
+                        <div class="text-sm">
                             by {{post.author.name}}
                         </div>
                     </div>
