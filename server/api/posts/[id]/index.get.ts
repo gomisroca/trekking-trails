@@ -13,7 +13,14 @@ export default defineEventHandler(async(event): Promise<EventHandlerResult> => {
             where: {
             id: id
             },
-            include: { author: true }
+            include: { 
+                author: true,
+                comments: {
+                    include: {
+                        author: true,
+                    }
+                },
+            }
         });
         if(post){
             return {

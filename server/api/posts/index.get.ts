@@ -3,7 +3,14 @@ import { Post } from '@prisma/client';
 
 export default defineEventHandler(async (event) => {
     try{
-        const posts: Post[] | null = await prisma.post.findMany({include: { author: true }});
+        const posts: Post[] | null = await prisma.post.findMany({include: { 
+            author: true,
+            comments: {
+                include: {
+                    author: true,
+                }
+            },
+         }});
         if(posts){
             return {
                 status: 200,

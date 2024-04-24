@@ -1,7 +1,8 @@
-import type { Post, User } from "@prisma/client";
+import type { Post, User, Comment } from "@prisma/client";
 
 interface PostWithAuthor extends Post{
-    author: User
+    author: User,
+    comments: Comment[]
 }
 interface SingleResponse extends Response{
     post: PostWithAuthor;
@@ -74,4 +75,18 @@ export async function removePost(id: string){
         method: 'DELETE'
     });
     return message
+}
+
+// Add Comment
+export async function postComment(postId: string, userId: string, comment: string): Promise<Response>{
+    const data = {
+        postId: postId,
+        userId: userId,
+        comment: comment,
+    }
+    const res = await $fetch<Response>('/api/comments/',  {
+        method: 'POST',
+        body: data,
+    });
+    return res
 }
