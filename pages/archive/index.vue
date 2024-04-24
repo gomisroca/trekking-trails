@@ -55,7 +55,7 @@ function getUniqueMonths(posts: Post[]): string[] {
     // Iterate over each post and add its month and year to the uniqueMonths Set
     posts.forEach(post => {
         const date = new Date(post.date);
-        const monthYearString = `${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`; // Format: 'Month of Year'
+        const monthYearString = `${date.toLocaleString('en-GB', { month: 'long' })} ${date.getFullYear()}`; // Format: 'Month of Year'
         uniqueMonths.add(monthYearString);
     });
 
@@ -107,14 +107,27 @@ onMounted(() => {
 </script>
 <template>
     <UContainer class="flex flex-col gap-10 py-4 md:py-0">
-        <UContainer class="flex flex-col lg:flex-row gap-2">
-            <UCard class="min-w-[250px]">
-                <div 
-                class="flex items-center justify-evenly"
-                @click="state.showCategories = !state.showCategories">
-                    By Category
-                    <UIcon :name="`${state.showCategories ? 'i-heroicons-chevron-up-20-solid' : 'i-heroicons-chevron-down-20-solid'}`" />
-                </div> 
+        <UContainer class="flex flex-col gap-2">
+            <UCard>
+                <div class="flex gap-2 items-center">
+                    <UButton
+                    class="font-bold"
+                    variant="outline"
+                    label="Category"
+                    @click="state.showCategories = !state.showCategories; state.showYears = false; state.showMonths = false;" /> 
+                    <UButton
+                    class="font-bold"
+                    variant="outline"
+                    label="Year"
+                    @click="state.showYears = !state.showYears; state.showCategories = false; state.showMonths = false;" /> 
+                    <UButton 
+                    class="font-bold"
+                    variant="outline"
+                    label="Month"
+                    @click="state.showMonths = !state.showMonths; state.showCategories = false; state.showYears = false;" /> 
+                </div>
+            </UCard>
+            <UCard v-if="state.showCategories || state.showMonths || state.showYears">
                 <UContainer v-if="state.showCategories" class="flex grid-cols-4 gap-2 mt-2">
                     <UButton 
                     variant="outline"
@@ -123,31 +136,14 @@ onMounted(() => {
                         {{ category }}
                     </UButton>
                 </UContainer>
-            </UCard>
-            <UCard class="min-w-[250px]">
-                <div 
-                class="flex items-center justify-evenly"
-                @click="state.showYears = !state.showYears">
-                    By Year
-                    <UIcon :name="`${state.showYears ? 'i-heroicons-chevron-up-20-solid' : 'i-heroicons-chevron-down-20-solid'}`" />
-                </div> 
                 <UContainer v-if="state.showYears" class="flex grid-cols-4 gap-2 mt-2">
                     <UButton 
                     variant="outline"
-                    size="xl"
                     v-for="year in state.years"
                     @click="filterByYear(year)">
                         {{ year }}
                     </UButton>
                 </UContainer>
-            </UCard>
-            <UCard class="min-w-[250px]">
-                <div 
-                class="flex items-center justify-evenly"
-                @click="state.showMonths = !state.showMonths">
-                    By Month
-                    <UIcon :name="`${state.showMonths ? 'i-heroicons-chevron-up-20-solid' : 'i-heroicons-chevron-down-20-solid'}`" />
-                </div> 
                 <UContainer v-if="state.showMonths" class="flex grid-cols-4 gap-2 mt-2">
                     <UButton 
                     variant="outline"
