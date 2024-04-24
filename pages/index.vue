@@ -6,8 +6,3 @@
         <PostList />
     </UContainer>
 </template>
-<script setup>
-useHead({
-    title: 'Trekking Trails',
-})
-</script>

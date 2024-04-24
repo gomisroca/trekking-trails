@@ -1,6 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-export default defineNuxtConfig({
+export default defineNuxtConfig({  
   devtools: { enabled: true },
+  app: {
+    head: {
+      title: 'Trekking Trails'
+    },
+  },
   tailwindcss: {
     cssPath: 'globals.css',
   },

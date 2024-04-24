@@ -11,7 +11,9 @@ if(!user.value && token.value){
 </script>
 <template>
     <!-- transition ease-in-out duration-1000 grayscale-0 lg:grayscale hover:grayscale-0  -->
-    <main :style="{ backgroundImage: `url(${isMobileOrTablet ? bgMobile : bgDark})` }" class="animated-background min-h-screen flex min-w-screen overflow-x-hidden">  
+    <main 
+    :style="{ backgroundImage: `url(${isMobileOrTablet ? bgMobile : bgDark})` }" 
+    class="animated-background min-h-screen flex min-w-screen overflow-x-hidden bg-repeat-round">  
         <NuxtLayout name="default">
             <div 
             class="min-w-full min-h-screen items-center flex bg-gradient-to-br animated-background from-orange-400/50 via-cyan-400/50 to-emerald-600/50 dark:from-orange-800/50 dark:via-neutral-700/50 dark:to-neutral-900/50" >
