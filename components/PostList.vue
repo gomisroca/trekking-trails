@@ -33,8 +33,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <!-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 -->
-    <UContainer class="grid grid-flow-col auto-cols-max gap-4">
+    <UContainer class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <PostCard
         v-for="post in posts" 
         :post="post"
