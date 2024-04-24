@@ -44,7 +44,7 @@ onMounted(() => {
 
 <template>
     <!-- grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 -->
-    <UContainer class="w-screen pt-16 pb-4 ">
+    <UContainer class="w-screen pt-16 pb-4 lg:pt-24">
         <UCard v-if="post" class="m-auto relative">
             <div 
             v-if="post.covers && post.covers[0]" 
