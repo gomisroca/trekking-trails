@@ -18,19 +18,20 @@ model User {
 }
 
 model Post {
-  id         String   @id @default(uuid())
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id         String    @id @default(uuid())
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   title      String
-  author     User     @relation(fields: [authorId], references: [id])
+  author     User      @relation(fields: [authorId], references: [id])
   authorId   String
   categories String[]
   date       DateTime
   content    String
   covers     String[]
   gallery    String[]
-  published  Boolean  @default(false)
-  viewCount  Int      @default(0)
+  published  Boolean   @default(false)
+  viewCount  Int       @default(0)
+  comments   Comment[]
 }
 
 model Comment {
@@ -40,6 +41,8 @@ model Comment {
   content   String
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  post      Post     @relation(fields: [postId], references: [id])
+  postId    String
 }
 
 enum Role {
