@@ -46,10 +46,10 @@ async function onSubmit () {
             <div class="flex flex-row w-full justify-between">
                 <div class="flex gap-6">
                     <div class="flex gap-2 items-center">
-                        <span v-if="comment.author" class="font-semibold">
+                        <span v-if="comment.author && comment.author.name.length > 0" class="font-semibold">
                             {{ comment.author.name.charAt(0).toUpperCase() + comment.author.name.slice(1) }}
                         </span>
-                        <span v-else class="font-semibold text-neutral-600">
+                        <span v-else class="text-neutral-600">
                             User Deleted
                         </span>
                         <span class="text-sm mt-[0.2rem]">
