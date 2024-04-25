@@ -9,6 +9,7 @@ import {
     ref
 } from 'vue'
 const route = useRoute()
+const { isMobile, isTablet } = useDevice();
 interface PostWithAuthor extends Post{
     author: User,
     comments: Comment[]
@@ -35,6 +36,13 @@ const selectImage = ((img: string) => {
     const idx = post.value?.gallery.findIndex(x => x == img);
     isOpen.value = true;
     selectedImage.value = idx;
+})
+
+const page = ref(1);
+const pageCount = isMobile ? 1 : isTablet ? 2 : 3
+
+const paginatedImages = computed(() => {
+  return post.value?.gallery.slice((page.value - 1) * pageCount, (page.value) * pageCount)
 })
 
 onMounted(() => {
@@ -73,16 +81,24 @@ onMounted(() => {
             <div class="py-4 lg:px-6">
                 {{ post.content }}
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:py-4 gap-2">
-                <div 
-                v-for="image in post.gallery" 
-                className='transition duration-200 hover:contrast-[1.1] rounded-md overflow-hidden grid content-center cursor-default md:cursor-pointer'>
-                    <img 
-                    class="w-full rounded-md"
-                    :key="image"
-                    :src="'/' + image" 
-                    @click="selectImage(image)" />
+            <div class="flex flex-col items-center gap-2">
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:py-4 gap-2">
+                    <div 
+                    v-for="image in paginatedImages" 
+                    className='transition duration-200 hover:contrast-[1.1] rounded-md overflow-hidden grid content-center cursor-default md:cursor-pointer'>
+                        <img 
+                        class="w-full rounded-md"
+                        :key="image"
+                        :src="'/' + image" 
+                        @click="selectImage(image)" />
+                    </div>
                 </div>
+                <UPagination 
+                v-if="post.gallery.length > pageCount"
+                v-model="page" 
+                :page-count="pageCount" 
+                :total="post.gallery.length"
+                show-last show-first />
             </div>
             <CommentSection v-if="post" :comments="post.comments" :post="post" />
         </UCard>
