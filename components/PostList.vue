@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { getPosts } from '@/utils/posts'
-import Date from '@/components/Date.vue'
 import type { Post, User, Comment } from '@prisma/client';
 import {
     onMounted,
     ref
 } from 'vue'
 
-const state = reactive({
-    paginatedPosts: <PostWithAuthor[]>([])
-})
 interface PostWithAuthor extends Post{
     author: User,
     comments: Comment[]
