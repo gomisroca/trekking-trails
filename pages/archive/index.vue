@@ -101,15 +101,22 @@ function filterByYear(year: number) {
     state.filteredPosts = filteredPosts
 }
 
+const { isMobile, isTablet } = useDevice();
+const page = ref(1);
+const pageCount = isMobile ? 1 : isTablet ? 2 : 3
+
+const paginatedPosts = computed(() => {
+    return state.filteredPosts.slice((page.value - 1) * pageCount, (page.value) * pageCount)
+})
 onMounted(() => {
     fetchPosts();
 });
 </script>
 <template>
-    <UContainer class="flex flex-col gap-10 py-4 md:py-0">
+    <UCard class="flex flex-col min-h-[400px] lg:min-w-[600px] mx-auto mb-4 mt-16 md:mt-4 xl:mt-24" :ui="{ body: { padding: 'md:px-0' } }">
         <UContainer class="flex flex-col gap-2">
             <UCard>
-                <div class="flex gap-2 items-center">
+                <div class="flex gap-2 items-center justify-evenly">
                     <UButton
                     class="font-bold"
                     variant="outline"
@@ -128,7 +135,7 @@ onMounted(() => {
                 </div>
             </UCard>
             <UCard v-if="state.showCategories || state.showMonths || state.showYears">
-                <UContainer v-if="state.showCategories" class="flex grid-cols-4 gap-2 mt-2">
+                <UContainer v-if="state.showCategories" class="flex grid-cols-4 gap-2 mt-2 justify-evenly">
                     <UButton 
                     variant="outline"
                     v-for="category in state.categories"
@@ -136,7 +143,7 @@ onMounted(() => {
                         {{ category }}
                     </UButton>
                 </UContainer>
-                <UContainer v-if="state.showYears" class="flex grid-cols-4 gap-2 mt-2">
+                <UContainer v-if="state.showYears" class="flex grid-cols-4 gap-2 mt-2 justify-evenly">
                     <UButton 
                     variant="outline"
                     v-for="year in state.years"
@@ -144,7 +151,7 @@ onMounted(() => {
                         {{ year }}
                     </UButton>
                 </UContainer>
-                <UContainer v-if="state.showMonths" class="flex grid-cols-4 gap-2 mt-2">
+                <UContainer v-if="state.showMonths" class="flex grid-cols-4 gap-2 mt-2 justify-evenly">
                     <UButton 
                     variant="outline"
                     v-for="month in state.months"
@@ -154,11 +161,18 @@ onMounted(() => {
                 </UContainer>
             </UCard>
         </UContainer> 
-        <UContainer class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+        <UContainer class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-8">
             <PostCard
-            v-for="post in state.filteredPosts" 
+            v-for="post in paginatedPosts" 
             :post="post"
             :key=post.title />
         </UContainer>
-    </UContainer>
+        <UPagination 
+        class="justify-center mt-4"
+        v-if="state.filteredPosts.length > pageCount"
+        v-model="page" 
+        :page-count="pageCount" 
+        :total="state.filteredPosts.length"
+        show-last show-first />
+    </UCard>
 </template>

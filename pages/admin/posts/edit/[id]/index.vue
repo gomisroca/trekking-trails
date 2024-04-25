@@ -1,6 +1,6 @@
 <template>
     <UContainer class="flex items-center my-4">
-        <UCard class="w-[600px]">
+        <UCard class="mt-12 lg:mt-20">
             <form class="p-2 flex flex-col space-y-6" @submit.prevent="onSubmit">
                 <UFormGroup label="Title" name="title" class="uppercase font-semibold">
                     <UInput
@@ -29,7 +29,7 @@
                 </UFormGroup>
                 
                 <UFormGroup label="Cover Pictures" class="uppercase font-semibold">
-                    <div class="grid grid-cols-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
                         <UCard v-for="image in state.covers">
                             <img :src="'/' + image" class="rounded-md mb-2" />
                             <div class="flex justify-evenly">
@@ -47,7 +47,7 @@
                     />
                 </UFormGroup>
                 <UFormGroup label="Gallery Pictures" class="uppercase font-semibold">
-                    <div class="grid grid-cols-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2">
                         <UCard v-for="image in state.gallery">
                             <img :src="'/' + image" class="rounded-md mb-2" />
                             <div class="flex justify-evenly">
