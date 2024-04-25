@@ -1,3 +1,4 @@
+import type { User } from '@prisma/client';
 import { useUser } from '~/composables/states';
 
 export async function registerUser(form: any){
@@ -55,3 +56,14 @@ export async function getUser(){
     }
 }
 
+export async function getUsers(){
+    const res = await $fetch('/api/users');
+    return res.users
+}
+interface SingleResponse extends Response{
+    user: User;
+}
+export async function getSingleUser(id: string){
+    const res = await $fetch<SingleResponse>('/api/users/' + id);
+    return res.user
+}

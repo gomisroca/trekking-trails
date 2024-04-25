@@ -1,6 +1,7 @@
 import { prisma } from '@/prisma/db';
 import { User } from "@prisma/client";
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 interface UserInputs {
     email: string;
@@ -18,7 +19,15 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
     try {    
         const id = getRouterParam(event, 'id');
         const { email, name, oldPassword, newPassword }: UserInputs = await readBody(event);
- 
+        const authorization = await event.req.headers.cookie;
+        let adminCheck = false;
+        if(authorization){
+            const token = authorization.split('=')[1];
+            const loggedUser = jwt.verify(token, process.env.TOKEN_KEY as jwt.Secret) as JWTUser;
+            if(loggedUser.role = 'ADMIN'){
+                adminCheck = true;
+            }
+        }
         const user: User | null = await prisma.user.findUnique({ 
             where: {
                 id: id,
@@ -33,7 +42,7 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
         }
         
         let passValid: boolean = await bcrypt.compare(oldPassword, user.password);
-        if(!passValid){
+        if(!passValid && !adminCheck){
             throw createError({
                 statusMessage: "5002",
                 statusCode: 400,
