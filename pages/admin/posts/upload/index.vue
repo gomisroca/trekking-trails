@@ -52,6 +52,9 @@
 <script setup lang="ts">
 import { useUser } from '~/composables/states'
 import { uploadPost } from '@/utils/posts';
+definePageMeta({
+    middleware: ['auth']
+})
 const covers = ref<HTMLInputElement>();
 const gallery = ref<HTMLInputElement>();
 const success = ref<string | null>();

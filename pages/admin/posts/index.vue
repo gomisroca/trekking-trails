@@ -6,6 +6,9 @@ import {
     onMounted,
     ref
 } from 'vue'
+definePageMeta({
+    middleware: ['auth']
+})
 
 interface PostWithAuthor extends Post{
     author: User,

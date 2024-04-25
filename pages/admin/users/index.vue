@@ -4,7 +4,9 @@ import {
     onMounted,
     ref
 } from 'vue'
-
+definePageMeta({
+    middleware: ['auth']
+})
 
 const users = ref<User[]>([]);
 const page = ref(1);

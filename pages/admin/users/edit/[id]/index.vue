@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { getUser, getSingleUser } from '~/utils/users';
+definePageMeta({
+    middleware: ['auth']
+})
 const success = ref<string | null>();
 const error = ref<string | null>();
 const newPasswordToggle = ref(false)
