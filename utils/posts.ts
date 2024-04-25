@@ -77,6 +77,12 @@ export async function removePost(id: string){
     return message
 }
 
+// Publish or Hide Single
+export async function toggleStatusPost(id: string){
+    const { message } = await $fetch<Response>('/api/posts/' + id + '/status');
+    return message
+}
+
 // Add Comment
 export async function postComment(postId: string, userId: string, comment: string): Promise<Response>{
     const data = {
@@ -93,26 +99,24 @@ export async function postComment(postId: string, userId: string, comment: strin
 
 // Move image
 export async function movePostImage(image: string, type: string, id: string){
-    const { message } = await $fetch<Response>('/api/posts/' + id + '/image',{
+    const res = await $fetch<Response>('/api/posts/' + id + '/image',{
         method: 'PUT',
         body: {
             image: image,
             type: type
         }
     })
-    console.log(message)
-    return message
+    return res
 }
 
 // Delete image
 export async function removePostImage(image: string, type: string, id: string){
-    const { message } = await $fetch<Response>('/api/posts/' + id + '/image',{
+    const res = await $fetch<Response>('/api/posts/' + id + '/image',{
         method: 'DELETE',
         body: {
             image: image,
             type: type
         }
     })
-    console.log(message)
-    return message
+    return res
 }
