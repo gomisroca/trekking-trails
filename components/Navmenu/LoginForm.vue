@@ -7,6 +7,7 @@ const state = reactive({
     password: '',
     keepAlive: false,
 })
+const route = useRoute()
 async function onSubmit() {
     try {
         error.value = null;
@@ -31,6 +32,7 @@ async function onSubmit() {
             }
             sessionCookie.value = res.token;
             await getUser();
+            await navigateTo({path: route.fullPath},{ open:{ target: '_self'} });
         }
     } catch (e: any) {
         error.value = e.statusMessage;
