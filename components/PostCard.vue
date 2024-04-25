@@ -33,7 +33,7 @@ const { post } = props;
                     <div className='font-semibold text-2xl'>{{post.title}}</div>
                     <div>
                         <div class="text-sm">
-                            by {{post.author.name}}
+                            by {{ post.author.name.charAt(0).toUpperCase() + post.author.name.slice(1) }}
                         </div>
                     </div>
                 </div>
