@@ -32,17 +32,6 @@ export async function getPosts(): Promise<PostWithAuthor[] | null> {
 //     });
 // }
 
-//     export function getPostsByTag(tag) {
-//       let data = allPostsData.data.filter(x => x.category.includes(tag));
-//       return data.sort((a, b) => {
-//         if (a.date < b.date) {
-//           return 1;
-//         } else {
-//           return -1;
-//         }
-//       });
-//     }
-
 // Get Single
 export async function getSinglePost(id: string): Promise<PostWithAuthor | null> {
     const res = await $fetch<SingleResponse>('/api/posts/' + id);
@@ -95,6 +84,32 @@ export async function postComment(postId: string, userId: string, comment: strin
         method: 'POST',
         body: data,
     });
+    return res
+}
+
+// Edit Comment
+export async function editComment(commentId: string, comment: string): Promise<Response>{
+    const data = {
+        commentId: commentId,
+        content: comment,
+    }
+    const res = await $fetch<Response>('/api/comments/',  {
+        method: 'PUT',
+        body: data,
+    });
+    return res
+}
+
+// Delete Comment
+export async function deleteComment(commentId: string): Promise<Response>{
+    const data = {
+        commentId: commentId
+    }
+    const res = await $fetch<Response>('/api/comments/',  {
+        method: 'DELETE',
+        body: data,
+    });
+    console.log(res)
     return res
 }
 

@@ -26,7 +26,7 @@ model Post {
   authorId   String
   categories String[]
   date       DateTime
-  content    String
+  content    String?
   covers     String[]
   gallery    String[]
   published  Boolean   @default(false)
