@@ -90,3 +90,29 @@ export async function postComment(postId: string, userId: string, comment: strin
     });
     return res
 }
+
+// Move image
+export async function movePostImage(image: string, type: string, id: string){
+    const { message } = await $fetch<Response>('/api/posts/' + id + '/image',{
+        method: 'PUT',
+        body: {
+            image: image,
+            type: type
+        }
+    })
+    console.log(message)
+    return message
+}
+
+// Delete image
+export async function removePostImage(image: string, type: string, id: string){
+    const { message } = await $fetch<Response>('/api/posts/' + id + '/image',{
+        method: 'DELETE',
+        body: {
+            image: image,
+            type: type
+        }
+    })
+    console.log(message)
+    return message
+}
