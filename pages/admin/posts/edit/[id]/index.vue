@@ -96,7 +96,7 @@ const route = useRoute()
 const state = reactive({
     title: <string>'',
     categories: <string>'',
-    content: <string>'',
+    content: <string | null>'',
     date: <string>'',
     covers: <string[]>[],
     gallery: <string[]>[],
@@ -184,7 +184,7 @@ async function onSubmit() {
             const formData = new FormData();
             formData.append('title', state.title)
             formData.append('categories', state.categories)
-            formData.append('content', state.content)
+            formData.append('content', state.content!)
             formData.append('user', userData.email)
             formData.append('date', state.date)
             Array.from(covers.value?.files as FileList).map((file, index) => formData.append('covers', file));
