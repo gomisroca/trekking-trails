@@ -49,13 +49,14 @@ async function onSubmit () {
                 placeholder="Share your opinion" />
             </UFormGroup>
             <div class="flex flex-col items-center">
-                <UButton 
-                v-if="!success"
-                type="submit" 
-                size="xl"
-                variant="ghost"
-                class="flex-1"
-                icon="i-heroicons-arrow-right-16-solid" />
+                <UTooltip class="flex-1" v-if="!success" text="Post">
+                    <UButton 
+                    type="submit" 
+                    size="xl"
+                    variant="ghost"
+                    class="flex-1"
+                    icon="i-heroicons-arrow-right-16-solid" />
+                </UTooltip>
                 <div class="m-auto">
                     <UIcon v-if="success" name="i-heroicons-check-16-solid" class="text-primary text-[2.5rem]"/>
                     <span v-if="error" class="text-red-500 font-semibold text-sm">{{ error }}</span>

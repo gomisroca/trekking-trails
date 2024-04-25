@@ -53,26 +53,34 @@ async function onSubmit () {
                             User Deleted
                         </span>
                         <span class="text-sm mt-[0.2rem]">
-                            <Date :date="createdAtDate" /> - {{ (new Date(createdAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
+                            <UTooltip text="Date of publication">
+                                <Date :date="createdAtDate" /> - {{ (new Date(createdAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
+                            </UTooltip>
                         </span>
                     </div>
                     <div v-if="createdAtDate !== updatedAtDate" class="text-sm mt-[0.2rem] flex items-center gap-1">
-                        <UIcon name="i-heroicons-pencil-20-solid" />
-                        <Date :date="updatedAtDate" /> - {{ (new Date(updatedAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
+                        <UTooltip text="Date of this post's last edit">
+                            <UIcon name="i-heroicons-pencil-20-solid" />
+                            <Date :date="updatedAtDate" /> - {{ (new Date(updatedAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
+                        </UTooltip>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <UButton 
-                    v-if="user && user.id == comment.author.id"
-                    variant="outline" 
-                    icon="i-heroicons-pencil-20-solid" 
-                    @click="state.showEditForm = !state.showEditForm"/>
-                    <UButton 
-                    color="red"
-                    v-if="user && (user.id == comment.author.id || user.role == 'ADMIN')"
-                    variant="outline" 
-                    icon="i-heroicons-trash-solid" 
-                    @click="deleteComment(comment.id)"/>
+                    <UTooltip text="Edit Post">
+                        <UButton 
+                        v-if="user && user.id == comment.author.id"
+                        variant="outline" 
+                        icon="i-heroicons-pencil-20-solid" 
+                        @click="state.showEditForm = !state.showEditForm"/>
+                    </UTooltip>
+                    <UTooltip text="Delete Post">
+                        <UButton 
+                        color="red"
+                        v-if="user && (user.id == comment.author.id || user.role == 'ADMIN')"
+                        variant="outline" 
+                        icon="i-heroicons-trash-solid" 
+                        @click="deleteComment(comment.id)"/>
+                    </UTooltip>
                 </div>
             </div>
         </div>
