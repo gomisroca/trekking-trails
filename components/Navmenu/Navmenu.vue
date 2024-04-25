@@ -3,11 +3,13 @@ import { useUser } from '~/composables/states'
 import { logoutUser } from '~/utils/users'
 import ThemeToggle from './ThemeToggle.vue';
 import RegisterForm from './RegisterForm.vue';
+import UserSettings from './UserSettings.vue';
 import LoginForm from './LoginForm.vue';
 const user: Ref<JWTUser> = useUser()
 
 const openRegister = ref<boolean>(false)
 const openLogin = ref<boolean>(false)
+const openSettings = ref<boolean>(false)
 </script>
 <template>
     <UPopover class="absolute top-4 right-4 lg:top-10 lg:right-10" mode="hover">
@@ -34,13 +36,13 @@ const openLogin = ref<boolean>(false)
                         <span class="uppercase font-semibold m-auto">{{user.name}}</span>
                         <div class="grid grid-cols-2 gap-2">
                             <UTooltip text="Settings">
-                                <UButton color="blue" variant="outline" icon="i-heroicons-cog-6-tooth-solid" />
+                                <UButton color="blue" variant="outline" icon="i-heroicons-cog-6-tooth-solid" @click="openSettings = true"/>
                             </UTooltip>
                             <UTooltip text="Logout">
                                 <UButton color="red" variant="outline" icon="i-heroicons-arrow-right-on-rectangle-solid" @click="logoutUser()" />
                             </UTooltip>
                             <UTooltip v-if="user.role == 'USER'" text="Admin">
-                                <UButton color="yellow" variant="outline" icon="i-heroicons-lock-closed-solid" />
+                                <UButton color="yellow" variant="outline" icon="i-heroicons-lock-closed-solid" to="/admin" />
                             </UTooltip>
                         </div>
                     </div>
@@ -57,5 +59,8 @@ const openLogin = ref<boolean>(false)
     </UModal>
     <UModal v-model="openLogin">
         <LoginForm />
+    </UModal>
+    <UModal v-model="openSettings">
+        <UserSettings />
     </UModal>
 </template>
