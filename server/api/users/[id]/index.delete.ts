@@ -36,7 +36,14 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
                 password: encryptedPassword,
             },
         })
-
+        await prisma.post.updateMany({
+            where: {
+                authorId: user.id,
+            },
+            data: {
+                published: false
+            }
+        })
         return {
             status: 200,
             message: 'Account Deleted'
