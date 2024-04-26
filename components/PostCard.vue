@@ -16,7 +16,7 @@ const { post } = props;
                     <img 
                     v-if="post && post.covers && post.covers[0]" 
                     className='rounded-t-md h-[150px] md:h-[200px] align-center w-full' 
-                    :src=post.covers[0] />
+                    :src="'/' +post.covers[0]" />
                     <USkeleton class="w-full h-[150px] md:h-[200px]" v-else />
                 </div>
                 <div className='mx-4 md:mx-6 absolute left-0 right-0 top-[100px] bottom-[100px] md:top-[130px] md:bottom-[130px] lg:top-[160px] lg:bottom-[160px] z-10 bg-neutral-100/85 dark:bg-neutral-900/85 p-2 items-center flex flex-col justify-center'>
@@ -45,7 +45,7 @@ const { post } = props;
                     <img 
                     v-if="post.covers && post.covers[1]" 
                     className='rounded-b-md h-[150px] md:h-[200px] align-center w-full' 
-                    :src=post.covers[1] />
+                    :src="'/' +post.covers[1]" />
                     <USkeleton class="w-full h-[150px] md:h-[200px]" v-else />
                 </div>
             </NuxtLink>

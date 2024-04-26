@@ -5,11 +5,13 @@ import ThemeToggle from './ThemeToggle.vue';
 import RegisterForm from './RegisterForm.vue';
 import UserSettings from './UserSettings.vue';
 import LoginForm from './LoginForm.vue';
+import Search from './Search.vue';
 const user: Ref<JWTUser> = useUser()
 
 const openRegister = ref<boolean>(false)
 const openLogin = ref<boolean>(false)
 const openSettings = ref<boolean>(false)
+const openSearch = ref<boolean>(false)
 </script>
 <template>
     <UPopover class="absolute top-4 right-4 lg:top-10 lg:right-10" mode="hover">
@@ -27,7 +29,7 @@ const openSettings = ref<boolean>(false)
                         <UButton variant="outline" icon="i-heroicons-book-open-solid" to="/archive" />
                     </UTooltip>
                     <UTooltip text="Search">
-                        <UButton variant="outline" icon="i-heroicons-magnifying-glass"  />
+                        <UButton variant="outline" icon="i-heroicons-magnifying-glass" @click="openSearch = true" />
                     </UTooltip>
                 </div>
                 <UDivider class="my-2" />
@@ -62,5 +64,8 @@ const openSettings = ref<boolean>(false)
     </UModal>
     <UModal v-model="openSettings">
         <UserSettings />
+    </UModal>
+    <UModal v-model="openSearch" :ui="{width: 'sm:max-w-none w-3/4', margin: 'my-auto'}">
+        <Search />
     </UModal>
 </template>
