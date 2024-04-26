@@ -161,7 +161,9 @@ onMounted(() => {
                 </UContainer>
             </UCard>
         </UContainer> 
-        <UContainer class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-8">
+        <UContainer 
+        v-if="paginatedPosts"
+        class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-8">
             <PostCard
             v-for="post in paginatedPosts" 
             :post="post"

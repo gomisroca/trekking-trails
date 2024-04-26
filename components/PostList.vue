@@ -38,9 +38,10 @@ onMounted(() => {
 </script>
 
 <template>
-    <UContainer class="flex flex-col gap-2 items-center">
+    <UContainer class="flex flex-col gap-2 items-center min-h-[28rem]">
         <UContainer class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <PostCard
+            v-if="posts"
             v-for="post in paginatedPosts" 
             :post="post"
             :key=post.title />
