@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client';
+import type { Comment, User } from '@prisma/client';
 import { useUser } from '~/composables/states';
 
 export async function registerUser(form: any){
@@ -54,6 +54,14 @@ export async function getUser(){
             userData.value = res.user as JWTUser;
         }
     }
+}
+
+interface CommentsResponse extends Response{
+    comments: Comment[];
+}
+export async function getUserComments(id: string){
+    const res = await $fetch<CommentsResponse>('/api/comments/' + id);
+    return res.comments
 }
 
 export async function getUsers(){
