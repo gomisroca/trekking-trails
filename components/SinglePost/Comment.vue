@@ -26,6 +26,8 @@ async function onSubmit () {
         const res = await editComment(comment.id, state.comment);
             if(res.status == 200){
                 success.value = res.message;
+                state.showEditForm = false;
+                comment.content = state.comment;
             }
         }else{
             throw createError({
@@ -66,14 +68,14 @@ async function onSubmit () {
                 </div>
                 <div class="flex gap-2">
                     <UTooltip text="Edit Post"
-                    v-if="user && user.id == comment.author.id">
+                    v-if="user && user.id == comment.author.id && comment.content.length > 0">
                         <UButton 
                         variant="outline" 
                         icon="i-heroicons-pencil-20-solid" 
                         @click="state.showEditForm = !state.showEditForm"/>
                     </UTooltip>
                     <UTooltip text="Delete Post" 
-                    v-if="user && (user.id == comment.author.id || user.role == 'ADMIN')">
+                    v-if="user && (user.id == comment.author.id || user.role == 'ADMIN') && comment.content.length > 0">
                         <UButton 
                         color="red"
                         variant="outline" 
@@ -92,7 +94,7 @@ async function onSubmit () {
                 <UTextarea 
                 v-model="state.comment" 
                 size="md"
-                :ui="{ size: { md: 'text-md' } }" />
+                :ui="{ size: { md: 'text-lg' } }" />
             </UFormGroup>
             <div class="flex flex-col items-center">
                 <UButton 
