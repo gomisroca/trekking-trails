@@ -24,7 +24,7 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
         if(authorization){
             const token = authorization.split('=')[1];
             const loggedUser = jwt.verify(token, process.env.TOKEN_KEY as jwt.Secret) as JWTUser;
-            if(loggedUser.role = 'ADMIN'){
+            if(loggedUser.role == 'ADMIN'){
                 adminCheck = true;
             }
         }
@@ -40,13 +40,14 @@ export default defineEventHandler(async (event): Promise<EventHandlerResult> => 
                 statusCode: 400,
             }); 
         }
-        
-        let passValid: boolean = await bcrypt.compare(oldPassword, user.password);
-        if(!passValid && !adminCheck){
-            throw createError({
-                statusMessage: "5002",
-                statusCode: 400,
-            }); 
+        if(oldPassword && !adminCheck){
+            let passValid: boolean = await bcrypt.compare(oldPassword, user.password);
+            if(!passValid && !adminCheck){
+                throw createError({
+                    statusMessage: "5002",
+                    statusCode: 400,
+                }); 
+            }
         }
         await prisma.user.update({
             where:{
