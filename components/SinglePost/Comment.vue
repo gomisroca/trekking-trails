@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { UButton } from '#build/components';
 import { useUser } from '~/composables/states'
 const user: Ref<JWTUser> = useUser()
 const props = defineProps({
@@ -60,23 +59,23 @@ async function onSubmit () {
                     </div>
                     <div v-if="createdAtDate !== updatedAtDate" class="text-sm mt-[0.2rem] flex items-center gap-1">
                         <UTooltip text="Date of this post's last edit">
-                            <UIcon name="i-heroicons-pencil-20-solid" />
+                            <UIcon name="i-heroicons-pencil-20-solid" class="mt-1" />
                             <Date :date="updatedAtDate" /> - {{ (new Date(updatedAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
                         </UTooltip>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <UTooltip text="Edit Post">
+                    <UTooltip text="Edit Post"
+                    v-if="user && user.id == comment.author.id">
                         <UButton 
-                        v-if="user && user.id == comment.author.id"
                         variant="outline" 
                         icon="i-heroicons-pencil-20-solid" 
                         @click="state.showEditForm = !state.showEditForm"/>
                     </UTooltip>
-                    <UTooltip text="Delete Post">
+                    <UTooltip text="Delete Post" 
+                    v-if="user && (user.id == comment.author.id || user.role == 'ADMIN')">
                         <UButton 
                         color="red"
-                        v-if="user && (user.id == comment.author.id || user.role == 'ADMIN')"
                         variant="outline" 
                         icon="i-heroicons-trash-solid" 
                         @click="deleteComment(comment.id)"/>
