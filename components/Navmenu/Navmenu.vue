@@ -41,7 +41,7 @@ const openSettings = ref<boolean>(false)
                             <UTooltip text="Logout">
                                 <UButton color="red" variant="outline" icon="i-heroicons-arrow-right-on-rectangle-solid" @click="logoutUser()" />
                             </UTooltip>
-                            <UTooltip v-if="user.role == 'USER'" text="Admin">
+                            <UTooltip v-if="user.role == 'ADMIN'" text="Admin">
                                 <UButton color="yellow" variant="outline" icon="i-heroicons-lock-closed-solid" to="/admin" />
                             </UTooltip>
                         </div>
