@@ -34,17 +34,17 @@ async function onSubmit() {
 </script>
 <template>
     <form class="p-4 flex flex-col space-y-4" @submit.prevent="onSubmit">
-        <UFormGroup label="Username" name="username" class="uppercase font-semibold">
+        <UFormGroup label="Username" name="username" class="uppercase font-semibold" :error="!state.name && 'Required'">
             <UInput
             v-model="state.name"
             />
         </UFormGroup>
-        <UFormGroup label="Email" name="email" class="uppercase font-semibold">
+        <UFormGroup label="Email" name="email" class="uppercase font-semibold" :error="!state.email && 'Required'">
             <UInput
             v-model="state.email"
             />
         </UFormGroup>
-        <UFormGroup label="Password" name="password" class="uppercase font-semibold">
+        <UFormGroup label="Password" name="password" class="uppercase font-semibold" :error="!state.password && 'Required'">
             <UInput
             v-model="state.password"
             />

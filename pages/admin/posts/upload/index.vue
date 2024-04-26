@@ -2,26 +2,26 @@
     <UContainer class="flex items-center">
         <UCard class="w-[600px]">
             <form class="p-2 flex flex-col space-y-6" @submit.prevent="onSubmit">
-                <UFormGroup label="Title" name="title" class="uppercase font-semibold">
+                <UFormGroup label="Title" name="title" class="uppercase font-semibold" :error="!state.title && 'Required'">
                     <UInput
                     v-model="state.title"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Categories" name="categories" class="uppercase font-semibold">
+                <UFormGroup label="Categories" name="categories" class="uppercase font-semibold" :error="!state.categories && 'Required'">
                     <UInput
                     v-model="state.categories"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Content" name="content" class="uppercase font-semibold">
+                <UFormGroup label="Content" name="content" class="uppercase font-semibold" :error="!state.content && 'Required'">
                     <UTextarea  
                     autoresize
                     v-model="state.content"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Date" name="date" class="uppercase font-semibold">
+                <UFormGroup label="Date" name="date" class="uppercase font-semibold" :error="!state.date && 'Required'">
                     <UInput
                     type="date"
                     v-model="state.date"

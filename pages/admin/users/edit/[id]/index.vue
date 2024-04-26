@@ -6,8 +6,10 @@ definePageMeta({
 })
 const success = ref<string | null>();
 const error = ref<string | null>();
-const newPasswordToggle = ref(false)
-const user: Ref<JWTUser> = useUser()
+const newPasswordToggle = ref(false);
+const confirmationOpen = ref(false);
+const deleteOpen = ref(false);
+const user: Ref<JWTUser> = useUser();
 const route = useRoute();
 
 const state = reactive({
@@ -21,12 +23,14 @@ async function onSubmit() {
     try {
         error.value = null;
         success.value = null;
+        confirmationOpen.value = false;
+        const id: string = route.params.id as string;
         const data = {
             name: state.name,
             email: state.email,
             newPassword: state.newPassword
         }
-        const res = await updateUser(user.value.id, data);
+        const res = await updateUser(id, data);
         if(res.status == 200){
             success.value = res.message;
             await getUser();
@@ -64,12 +68,12 @@ onMounted(() => {
     <UCard class="relative m-auto">
         <UCard>
             <form class="p-4 flex flex-col space-y-4" @submit.prevent="onSubmit">
-                <UFormGroup label="Username" name="username" class="uppercase font-semibold">
+                <UFormGroup label="Username" name="username" class="uppercase font-semibold" :error="!state.name && 'Required'">
                     <UInput
                     v-model="state.name"
                     />
                 </UFormGroup>
-                <UFormGroup label="Email" name="email" class="uppercase font-semibold">
+                <UFormGroup label="Email" name="email" class="uppercase font-semibold" :error="!state.email && 'Required'">
                     <UInput
                     v-model="state.email"
                     />
@@ -82,13 +86,23 @@ onMounted(() => {
                     v-model="state.newPassword"
                     />
                 </UFormGroup>
-                <UButton type="submit" class="uppercase font-bold dark:text-secondary">Update</UButton>
+                <UButton class="uppercase font-bold dark:text-secondary" @click="confirmationOpen = true">Update</UButton>
+                <UModal v-model="confirmationOpen">
+                    <UFormGroup label="Are you sure you want to update these settings?" class="p-8 uppercase font-semibold">
+                        <UButton @click="onSubmit" class="uppercase font-bold dark:text-secondary">Confirm</UButton>
+                    </UFormGroup>
+                </UModal>
                 <div class="m-auto">
                     <span v-if="success" class="text-primary font-semibold">{{ success }}</span>
                     <span v-if="error" class="text-red-500 font-semibold">{{ error }}</span>
                 </div>
                 <div>
-                    <UButton @click="deleteUser(user.id)" label="Delete Account" color="red" size="sm" />
+                    <UButton @click="deleteOpen = true" label="Delete Account" color="red" size="sm"  class="dark:text-secondary font-bold uppercase" />
+                    <UModal v-model="deleteOpen">
+                        <UFormGroup label="Are you sure you want to delete this account?" class="p-8 uppercase font-semibold">
+                            <UButton color="red" @click="deleteUser(user.id); deleteOpen = false;" class="uppercase font-bold dark:text-secondary">Confirm</UButton>
+                        </UFormGroup>
+                    </UModal>
                 </div>
             </form>
         </UCard>

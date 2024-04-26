@@ -12,6 +12,7 @@ const createdAtDate = comment.createdAt;
 const updatedAtDate = comment.updatedAt;
 const success = ref<string | null>();
 const error = ref<string | null>();
+const deleteOpen = ref(false)
 const state = reactive({
     showEditForm: <boolean>false,
     comment: comment.content,
@@ -60,27 +61,37 @@ async function onSubmit () {
                         </span>
                     </div>
                     <div v-if="createdAtDate !== updatedAtDate" class="text-sm mt-[0.2rem] flex items-center gap-1">
-                        <UTooltip text="Date of this post's last edit">
+                        <UTooltip text="Date of this comment's last edit">
                             <UIcon name="i-heroicons-pencil-20-solid" class="mt-1" />
                             <Date :date="updatedAtDate" /> - {{ (new Date(updatedAtDate)).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) }}
                         </UTooltip>
                     </div>
                 </div>
                 <div class="flex gap-2">
-                    <UTooltip text="Edit Post"
+                    <UTooltip text="Edit Comment"
                     v-if="user && user.id == comment.author.id && comment.content.length > 0">
                         <UButton 
                         variant="outline" 
                         icon="i-heroicons-pencil-20-solid" 
                         @click="state.showEditForm = !state.showEditForm"/>
                     </UTooltip>
-                    <UTooltip text="Delete Post" 
+                    <UTooltip text="Delete Comment" 
                     v-if="user && (user.id == comment.author.id || user.role == 'ADMIN') && comment.content.length > 0">
                         <UButton 
                         color="red"
                         variant="outline" 
                         icon="i-heroicons-trash-solid" 
-                        @click="deleteComment(comment.id)"/>
+                        @click="deleteOpen = true"/>
+                        <UModal v-model="deleteOpen">
+                            <UFormGroup label="Are you sure you want to delete this comment?" class="p-8 uppercase font-semibold">
+                                <UButton 
+                                color="red" 
+                                @click="deleteComment(comment.id); deleteOpen = false;" 
+                                class="uppercase font-bold dark:text-secondary">
+                                    Confirm
+                                </UButton>
+                            </UFormGroup>
+                        </UModal>
                     </UTooltip>
                 </div>
             </div>
@@ -90,7 +101,7 @@ async function onSubmit () {
             <span v-else class="text-neutral-600">This comment has been deleted.</span>
         </div>
         <form v-if="state.showEditForm"  @submit.prevent="onSubmit" class="flex">
-            <UFormGroup name="comment" class="flex-1 mr-2">
+            <UFormGroup name="comment" class="flex-1 mr-2" :error="!state.comment && 'Comment cannot be blank'">
                 <UTextarea 
                 v-model="state.comment" 
                 size="md"

@@ -2,26 +2,26 @@
     <UContainer class="flex items-center my-4">
         <UCard class="mt-12 lg:mt-20">
             <form class="p-2 flex flex-col space-y-6" @submit.prevent="onSubmit">
-                <UFormGroup label="Title" name="title" class="uppercase font-semibold">
+                <UFormGroup label="Title" name="title" class="uppercase font-semibold" :error="!state.title && 'Required'">
                     <UInput
                     v-model="state.title"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Categories" name="categories" class="uppercase font-semibold">
+                <UFormGroup label="Categories" name="categories" class="uppercase font-semibold" :error="!state.categories && 'Required'">
                     <UInput
                     v-model="state.categories"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Content" name="content" class="uppercase font-semibold">
+                <UFormGroup label="Content" name="content" class="uppercase font-semibold" :error="!state.content && 'Required'">
                     <UTextarea  
                     autoresize
                     v-model="state.content"
                     />
                 </UFormGroup>
 
-                <UFormGroup label="Date" name="date" class="uppercase font-semibold">
+                <UFormGroup label="Date" name="date" class="uppercase font-semibold" :error="!state.date && 'Required'">
                     <UInput
                     type="date"
                     v-model="state.date"
@@ -64,16 +64,54 @@
                     ref="gallery" type="file" multiple
                     />
                 </UFormGroup>
-                <UButton type="submit" class="uppercase font-bold dark:text-secondary">Update Post</UButton>
+                <UButton @click="confirmationOpen = true" class="uppercase font-bold dark:text-secondary">Update Post</UButton>
+                <UModal v-model="confirmationOpen">
+                    <UFormGroup label="Are you sure you want to update this post?" class="p-8 uppercase font-semibold">
+                        <UButton 
+                        @click="onSubmit(); confirmationOpen = false;" 
+                        class="uppercase font-bold dark:text-secondary">
+                            Confirm
+                        </UButton>
+                    </UFormGroup>
+                </UModal>
             </form>
             <div class="m-auto">
                 <span v-if="success" class="text-primary font-medium">{{ success }}</span>
                 <span v-if="error" class="text-red-500 font-medium">{{ error }}</span>
             </div>
             <div class="m-auto flex mt-5 justify-evenly">
-                <UButton v-if="state.published == false" @click="toggleStatusPost(route.params.id as string); state.published = true" label="Publish Post" color="green" size="sm" />
-                <UButton v-else @click="toggleStatusPost(route.params.id as string); state.published = false" label="Hide Post" color="blue" size="sm" />
-                <UButton @click="removePost(route.params.id as string)" label="Remove Post" color="red" size="sm" />
+                <UButton 
+                v-if="state.published == false" 
+                @click="toggleStatusPost(route.params.id as string); 
+                state.published = true" 
+                label="Publish Post" 
+                color="green" 
+                size="sm" 
+                class="uppercase font-bold dark:text-secondary"/>
+                <UButton 
+                v-else 
+                @click="toggleStatusPost(route.params.id as string); 
+                state.published = false" 
+                label="Hide Post" 
+                color="blue" 
+                size="sm"
+                class="uppercase font-bold dark:text-secondary" />
+                <UButton 
+                @click="deleteOpen = true" 
+                label="Remove Post" 
+                color="red"
+                 size="sm" 
+                 class="uppercase font-bold dark:text-secondary" />
+                <UModal v-model="deleteOpen">
+                    <UFormGroup label="Are you sure you want to delete this post?" class="p-8 uppercase font-semibold">
+                        <UButton 
+                        color="red" 
+                        @click="removePost(route.params.id as string); deleteOpen = false;" 
+                        class="uppercase font-bold dark:text-secondary">
+                            Confirm
+                        </UButton>
+                    </UFormGroup>
+                </UModal>
             </div>
         </UCard>
     </UContainer>
@@ -92,6 +130,8 @@ const coverMoveSuccess = ref<string | null>();
 const coverRemoveSuccess = ref<string | null>();
 const galleryMoveSuccess = ref<string | null>();
 const galleryRemoveSuccess = ref<string | null>();
+const deleteOpen = ref(false);
+const confirmationOpen = ref(false);
 const error = ref<string | null>();
 const user: Ref<JWTUser> = useUser()
 const route = useRoute()
