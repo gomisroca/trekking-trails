@@ -12,8 +12,8 @@ interface MultipleResponse extends Response {
 }
 
 // Get Many
-export async function getPosts() {
-  const res = await $fetch("/api/posts/");
+export async function getPosts(): Promise<PostWithAuthor[] | null> {
+  const res = await $fetch<MultipleResponse>("/api/posts/");
   if (res.status == 200) {
     return res.posts.filter((post) => post.published);
   }

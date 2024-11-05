@@ -21,11 +21,9 @@ const paginatedPosts = computed(() => {
 
 async function fetchPosts() {
   try {
-    const response: PostWithAuthor[] | null = await getPosts();
-    res.value = response;
+    const response = await $fetch<PostWithAuthor[]>("/api/posts/");
     if (response) {
       posts.value = response;
-      console.log(posts.value);
     }
   } catch (err: any) {
     if (err.response) {
@@ -42,7 +40,6 @@ onMounted(() => {
 <template>
   <UContainer class="flex flex-col gap-2 items-center min-h-[28rem]">
     <UContainer class="flex flex-wrap gap-4">
-      <p>{{ res }}</p>
       <PostCard
         v-if="posts"
         v-for="post in paginatedPosts"
