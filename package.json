@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/ui": "^2.15.2",
     "@prisma/client": "^5.12.1",
+    "@supabase/supabase-js": "^2.46.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/formidable": "^3.4.5",
     "@types/uuid": "^9.0.8",
