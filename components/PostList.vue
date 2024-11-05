@@ -21,7 +21,7 @@ const paginatedPosts = computed(() => {
 
 async function fetchPosts() {
   try {
-    const response = await getPosts();
+    const response: PostWithAuthor[] | null = await getPosts();
     res.value = response;
     if (response) {
       posts.value = response;
