@@ -12,8 +12,15 @@ interface MultipleResponse extends Response {
 }
 
 // Get Many
-export async function getPosts(): Promise<PostWithAuthor[] | null> {
-  return "hi";
+export async function getPosts() {
+  const { data, status, error } = await useFetch("/api/posts");
+  if (status.value == "success" && data.value) {
+    return data.value?.posts.filter((post) => post.published);
+  }
+  if (error.value) {
+    console.log(error.value);
+  }
+  return null;
 }
 
 // export async function getSortedPostsData() {
