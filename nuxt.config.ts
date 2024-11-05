@@ -17,7 +17,6 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/device",
     "@nuxthub/core",
-    "@prisma/nuxt",
   ],
   googleFonts: {
     families: {
