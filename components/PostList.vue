@@ -7,6 +7,7 @@ interface PostWithAuthor extends Post {
   author: User;
   comments: Comment[];
 }
+const res = ref(null);
 const posts = ref<PostWithAuthor[]>([]);
 const page = ref(1);
 const pageCount = 5;
@@ -21,6 +22,7 @@ const paginatedPosts = computed(() => {
 async function fetchPosts() {
   try {
     const response = await getPosts();
+    res.value = response;
     if (response) {
       posts.value = response;
       console.log(posts.value);
@@ -40,6 +42,7 @@ onMounted(() => {
 <template>
   <UContainer class="flex flex-col gap-2 items-center min-h-[28rem]">
     <UContainer class="flex flex-wrap gap-4">
+      <p>{{ res }}</p>
       <PostCard
         v-if="posts"
         v-for="post in paginatedPosts"

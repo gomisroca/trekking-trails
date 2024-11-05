@@ -12,13 +12,10 @@ interface MultipleResponse extends Response {
 }
 
 // Get Many
-export async function getPosts() {
-  const { data, status, error } = await useFetch("/api/posts");
-  if (status.value == "success" && data.value) {
-    return data.value?.posts.filter((post) => post.published);
-  }
-  if (error.value) {
-    console.log(error.value);
+export async function getPosts(): Promise<PostWithAuthor[] | null> {
+  const res = await $fetch<MultipleResponse>("/api/posts/");
+  if (res.status == 200) {
+    return res.posts.filter((post) => post.published);
   }
   return null;
 }
