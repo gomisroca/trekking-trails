@@ -1,11 +1,9 @@
 import formidable from "formidable";
-import path from "path";
-import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
-import { prisma } from "@/prisma/db";
+import prisma from "~/prisma/prisma";
 import { IncomingMessage } from "http";
-import { Post, User } from "@prisma/client";
 import uploadImage from "~/utils/uploadImage";
+import { Post } from "@prisma/client";
 
 interface FormFile {
   filepath: string;
@@ -51,7 +49,7 @@ export default defineEventHandler(
       }
 
       // Check for user
-      const user: User | null = await prisma.user.findUnique({
+      const user = await prisma.user.findUnique({
         where: {
           email: body.user[0],
         },
