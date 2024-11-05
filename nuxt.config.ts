@@ -1,21 +1,14 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    preset: "node-server",
-  },
-
   devtools: { enabled: true },
-
   app: {
     head: {
       title: "Trekking Trails",
     },
   },
-
   tailwindcss: {
     cssPath: "globals.css",
   },
-
   modules: [
     "@nuxt/ui",
     "@nuxtjs/tailwindcss",
@@ -23,7 +16,6 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/device",
   ],
-
   googleFonts: {
     families: {
       Roboto: true,
@@ -37,6 +29,5 @@ export default defineNuxtConfig({
       "Dancing Script": true,
     },
   },
-
   compatibilityDate: "2024-11-05",
 });
