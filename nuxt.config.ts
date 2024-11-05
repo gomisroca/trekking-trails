@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: false,
   devtools: { enabled: true },
   app: {
     head: {
@@ -16,6 +17,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/device",
     "@nuxthub/core",
+    "@prisma/nuxt",
   ],
   googleFonts: {
     families: {
