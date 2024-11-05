@@ -20,17 +20,6 @@ export async function getPosts(): Promise<PostWithAuthor[] | null> {
   return null;
 }
 
-// export async function getSortedPostsData() {
-//     const allPostsData = await getPosts();
-//     return (allPostsData).sort((a, b) => {
-//         if (a.date < b.date) {
-//             return 1;
-//         } else {
-//             return -1;
-//         }
-//     });
-// }
-
 // Get Single
 export async function getSinglePost(
   id: string

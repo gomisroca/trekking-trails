@@ -21,14 +21,12 @@ const paginatedPosts = computed(() => {
 
 async function fetchPosts() {
   try {
-    const response = await $fetch<PostWithAuthor[]>("/api/posts/");
+    const response = await $fetch<PostWithAuthor[]>("/api/posts");
     if (response) {
       posts.value = response;
     }
   } catch (err: any) {
-    if (err.response) {
-      console.log("Server Error:", err);
-    }
+    console.error("Error fetching posts:", err);
   }
 }
 
