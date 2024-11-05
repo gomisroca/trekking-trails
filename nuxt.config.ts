@@ -15,6 +15,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxtjs/google-fonts",
     "@nuxtjs/device",
+    "@nuxthub/core",
   ],
   googleFonts: {
     families: {
